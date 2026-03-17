@@ -1,0 +1,181 @@
+"# sistema-caixa-restaurante" 
+
+import os
+from datetime import datetime
+
+# --- CONFIGURAÇÃO ---
+ARQUIVO_RELATORIO = "relatorio_vendas.txt"import os
+from datetime import datetime
+
+# --- CONFIGURAÇÃO ---
+ARQUIVO_RELATORIO = "relatorio_vendas.txt"
+
+def salvar_no_relatorio(valor_venda, faturamento_total):
+    data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
+    # Criamos a linha detalhada
+    linha = (f"[{data_hora}] Venda: R$ {valor_venda:>8.2f} | "
+             f"ACUMULADO DO DIA: R$ {faturamento_total:>10.2f}\n")
+    
+    try:
+        # 'a' (append) para adicionar sem apagar o histórico
+        with open(ARQUIVO_RELATORIO, "a", encoding="utf-8") as arquivo:
+            arquivo.write(linha)
+    except Exception as e:
+        print(f"[!] Erro ao gravar no arquivo: {e}")
+
+def exibir_recibo(itens):
+    total_venda = sum(itens)
+    print("\n" + "="*40)
+    print(f"{'CARIOCA BURGER':^40}")
+    print(f"{'RECIBO DE VENDA':^40}")
+    print("="*40)
+    print(f" Itens lançados: {len(itens)}")
+    print("-" * 40)
+    print(f" TOTAL DA VENDA:   R$ {total_venda:>10.2f}")
+    print("="*40)
+    print(f"{'Desenvolvido por: Junior':^40}")
+    print("="*40)
+    return total_venda
+
+def iniciar_caixa():
+    faturamento_do_dia = 0
+    
+    # Limpa a tela inicial (Windows)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    print("="*40)
+    print(f"{'SISTEMA CARIOCA BURGER V1.6':^40}")
+    print(f"{'CONTROLE DE FATURAMENTO':^40}")
+    print("="*40)
+    
+    carrinho = []
+    
+    while True:
+        print(f"\n>>> FATURAMENTO TOTAL: R$ {faturamento_do_dia:.2f}")
+        print(f">>> CLIENTE ATUAL:     R$ {sum(carrinho):.2f}")
+        
+        entrada = input("\nValor do item (ou 'f' para FECHAR, 'sair' para encerrar): ").lower()
+        
+        if entrada == 'f':
+            if carrinho:
+                # 1. Calcula e exibe
+                valor_da_venda = exibir_recibo(carrinho)
+                
+                # 2. Atualiza a soma do dia
+                faturamento_do_dia += valor_da_venda
+                
+                # 3. GRAVA NO RELATÓRIO
+                salvar_no_relatorio(valor_da_venda, faturamento_do_dia)
+                
+                print(f"\n[OK] Venda gravada! Acumulado: R$ {faturamento_do_dia:.2f}")
+                
+                carrinho = [] # Reseta para o próximo
+                input("\nAperte ENTER para o próximo cliente...")
+                os.system('cls' if os.name == 'nt' else 'clear')
+            else:
+                print("\n[!] Carrinho vazio.")
+        
+        elif entrada == 'sair':
+            print(f"\nFechando... Faturamento final: R$ {faturamento_do_dia:.2f}")
+            break
+            
+        else:
+            try:
+                # Limpa a entrada para aceitar vírgula
+                valor = float(entrada.replace(',', '.'))
+                carrinho.append(valor)
+                print(f"Item R$ {valor:.2f} OK.")
+            except ValueError:
+                print("[!] Valor inválido. Use números ou 'f'.")
+
+    input("\nSistema finalizado. Pressione ENTER para sair.")
+
+if __name__ == "__main__":
+    iniciar_caixa()
+"# sistema-caixa-restaurante" 
+
+
+def salvar_no_relatorio(valor_venda, faturamento_total):
+    data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
+    # Criamos a linha detalhada
+    linha = (f"[{data_hora}] Venda: R$ {valor_venda:>8.2f} | "
+             f"ACUMULADO DO DIA: R$ {faturamento_total:>10.2f}\n")
+    
+    try:
+        # 'a' (append) para adicionar sem apagar o histórico
+        with open(ARQUIVO_RELATORIO, "a", encoding="utf-8") as arquivo:
+            arquivo.write(linha)
+    except Exception as e:
+        print(f"[!] Erro ao gravar no arquivo: {e}")
+
+def exibir_recibo(itens):
+    total_venda = sum(itens)
+    print("\n" + "="*40)
+    print(f"{'CARIOCA BURGER':^40}")
+    print(f"{'RECIBO DE VENDA':^40}")
+    print("="*40)
+    print(f" Itens lançados: {len(itens)}")
+    print("-" * 40)
+    print(f" TOTAL DA VENDA:   R$ {total_venda:>10.2f}")
+    print("="*40)
+    print(f"{'Desenvolvido por: Junior':^40}")
+    print("="*40)
+    return total_venda
+
+def iniciar_caixa():
+    faturamento_do_dia = 0
+    
+    # Limpa a tela inicial (Windows)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    print("="*40)
+    print(f"{'SISTEMA CARIOCA BURGER V1.6':^40}")
+    print(f"{'CONTROLE DE FATURAMENTO':^40}")
+    print("="*40)
+    
+    carrinho = []
+    
+    while True:
+        print(f"\n>>> FATURAMENTO TOTAL: R$ {faturamento_do_dia:.2f}")
+        print(f">>> CLIENTE ATUAL:     R$ {sum(carrinho):.2f}")
+        
+        entrada = input("\nValor do item (ou 'f' para FECHAR, 'sair' para encerrar): ").lower()
+        
+        if entrada == 'f':
+            if carrinho:
+                # 1. Calcula e exibe
+                valor_da_venda = exibir_recibo(carrinho)
+                
+                # 2. Atualiza a soma do dia
+                faturamento_do_dia += valor_da_venda
+                
+                # 3. GRAVA NO RELATÓRIO
+                salvar_no_relatorio(valor_da_venda, faturamento_do_dia)
+                
+                print(f"\n[OK] Venda gravada! Acumulado: R$ {faturamento_do_dia:.2f}")
+                
+                carrinho = [] # Reseta para o próximo
+                input("\nAperte ENTER para o próximo cliente...")
+                os.system('cls' if os.name == 'nt' else 'clear')
+            else:
+                print("\n[!] Carrinho vazio.")
+        
+        elif entrada == 'sair':
+            print(f"\nFechando... Faturamento final: R$ {faturamento_do_dia:.2f}")
+            break
+            
+        else:
+            try:
+                # Limpa a entrada para aceitar vírgula
+                valor = float(entrada.replace(',', '.'))
+                carrinho.append(valor)
+                print(f"Item R$ {valor:.2f} OK.")
+            except ValueError:
+                print("[!] Valor inválido. Use números ou 'f'.")
+
+    input("\nSistema finalizado. Pressione ENTER para sair.")
+
+if __name__ == "__main__":
+    iniciar_caixa()
